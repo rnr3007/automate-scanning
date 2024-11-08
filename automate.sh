@@ -14,5 +14,18 @@ while read -r domain; do
     # Working in the directory
     cd ./$domain
 
+    echo "==================="
+    echo "Starting subfinder"
+    echo "==================="
+    subfinder -d $domain -o subfinder.txt
 
+    echo "==================="
+    echo "Starting nuclei"
+    echo "==================="
+    nuclei -l subfinder.txt -t ~/nuclei-templates/ -o nuclei-full.txt
+
+    echo "==================="
+    echo "Starting httpx"
+    echo "==================="
+    httpx -l subfinder.txt -silent -o httpx.txt -fc 200
 done
