@@ -2,8 +2,11 @@
 
 # Check the working directory
 WORK_DIR=$(pwd)
-
 # Automate subfinder scan, nmap, and nuclei for li.st of csirt enabled website
+
+# while read -r domain; do
+#     echo "$domain"
+# done
 
 if [[ -z $1 ]]; then
     while read -r domain; do
@@ -11,16 +14,17 @@ if [[ -z $1 ]]; then
             break
         fi
 
-        echo "Automating check for: $line"
-
+        echo "==================="
+        echo "Automating check for: $domain"
+        echo "==================="
+        
         # Check if directory exists, if not, create the new one
         if ! [[ -d ./$domain ]]; then
             mkdir $domain
         fi
 
         # Working in the directory
-        cd ./$domain
-
+        cd $domain
         echo "==================="
         echo "Starting subfinder"
         echo "==================="
@@ -36,6 +40,6 @@ if [[ -z $1 ]]; then
         echo "==================="
         httpx -l subfinder.txt -silent -o httpx.txt -fc 200
 
-        cd $WORKDIR
+        cd $WORK_DIR
     done
 fi
