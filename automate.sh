@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Check the working directory
+WORK_DIR=$(pwd)
 
 # Automate subfinder scan, nmap, and nuclei for list of csirt enabled website
 while read -r domain; do
@@ -28,4 +29,6 @@ while read -r domain; do
     echo "Starting httpx"
     echo "==================="
     httpx -l subfinder.txt -silent -o httpx.txt -fc 200
+
+    cd $WORKDIR
 done
